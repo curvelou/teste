@@ -31,25 +31,7 @@
         <h2>Dados Salvos</h2>
         <div id='dataDisplay'></div>
         <button type='button' onclick='downloadData()'>Baixar Dados</button>
-        <h2>Dashboard</h2>
-        <div class='dashboard'>
-            <label>Tipo de Gráfico: </label>
-            <select id='chartType'>
-                <option value='bar'>Barra</option>
-                <option value='line'>Linha</option>
-                <option value='pie'>Pizza</option>
-                <option value='radar'>Radar</option>
-            </select><br>
-            <label>Dados para Plotar: </label>
-            <select id='dataToPlot'>
-                <option value='latitude'>Latitude</option>
-                <option value='longitude'>Longitude</option>
-            </select><br>
-            <button type='button' onclick='generateChart()'>Gerar Gráfico</button>
-            <canvas id='dataChart' width='400' height='200'></canvas>
-            <button type='button' onclick='downloadChart()'>Baixar Gráfico</button>
-        </div>
-    </div>
+        
     <script src='script.js'></script>
 </body>
 </html>
