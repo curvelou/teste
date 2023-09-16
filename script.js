@@ -36,12 +36,35 @@ function displayData() {
     });
 }
 
-function clearForm() {
-    let dataForm = document.getElementById('dataForm');
-    dataForm.reset();
+dataStorage.push(data);  // Adicione os dados à matriz de armazenamento.
+
+    displayData();
+    clearForm();
+
+    // Serialize e salve os dados em um arquivo de texto (.txt).
+    saveToTxtFile(dataStorage, 'data.txt');
 }
 
-function downloadData() {
-    let blob = new Blob([JSON.stringify(dataStorage)], { type: 'application/json' });
-    saveAs(blob, 'data.json');
+function displayData() {
+    // ... Código para exibir os dados ...
+}
+
+function clearForm() {
+    // ... Código para limpar o formulário ...
+}
+
+function saveToTxtFile(data, filename) {
+    let textData = JSON.stringify(data, null, 2); // Transforma os dados em formato de texto (JSON indentado).
+    let blob = new Blob([textData], { type: 'text/plain' });
+    let url = URL.createObjectURL(blob);
+
+    let a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+
+    document.body.appendChild(a);
+    a.click();
+
+    // Limpar a URL criada após o download.
+    URL.revokeObjectURL(url);
 }
