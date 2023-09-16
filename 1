@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registro de Dados de Campo</title>
+    <link rel='stylesheet' type='text/css' href='styles.css'>
+    <script src='https://cdn.jsdelivr.net/npm/chart.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js'></script>
+</head>
+<body>
+    <div class='container'>
+        <h1>Registro de Dados de Campo</h1>
+        <p>Uma ferramenta simples para registrar e armazenar dados coletados em campo.</p>
+        <form id='dataForm'>
+            <label>Ponto: </label><input type='text' id='point' name='point'><br>
+            <h2>Coordenadas</h2>
+            <label>Latitude: </label><input type='text' id='latitude' name='latitude'><br>
+            <label>Longitude: </label><input type='text' id='longitude' name='longitude'><br>
+            <h2>Condições de Mare</h2>
+            <label>Estado da Mare: </label>
+            <select id='tideCondition' name='tideCondition'>
+                <option value='Mare Alta'>Mare Alta</option>
+                <option value='Mare Baixa'>Mare Baixa</option>
+            </select><br>
+            <label>Condição da Agua: </label><input type='text' id='waterCondition' name='waterCondition'><br>
+            <label>Quantidade de Fragmentos: </label><input type='number' id='fragmentQuantity' name='fragmentQuantity'><br>
+            <label>Quantidade de Fibras: </label><input type='number' id='fiberQuantity' name='fiberQuantity'><br>
+            <h2>Cores de Microplasticos</h2>
+            <div class='colorSection'>
+                <div class='colorItem'><label>Azul: </label><input type='number' id='blue' name='blue'></div>
+                <div class='colorItem'><label>Vermelho: </label><input type='number' id='red' name='red'></div>
+                <div class='colorItem'><label>Verde: </label><input type='number' id='green' name='green'></div>
+                <div class='colorItem'><label>Amarelo: </label><input type='number' id='yellow' name='yellow'></div>
+                <div class='colorItem'><label>Preto: </label><input type='number' id='black' name='black'></div>
+                <div class='colorItem'><label>Branco: </label><input type='number' id='white' name='white'></div>
+                <div class='colorItem'><label>Laranja: </label><input type='number' id='orange' name='orange'></div>
+                <div class='colorItem'><label>Rosa: </label><input type='number' id='pink' name='pink'></div>
+                <div class='colorItem'><label>Marrom: </label><input type='number' id='brown' name='brown'></div>
+                <div class='colorItem'><label>Cinza: </label><input type='number' id='grey' name='grey'></div>
+                <div class='colorItem'><label>Translucido: </label><input type='number' id='translucent' name='translucent'></div>
+            </div>
+            <label>Observacoes: </label><textarea id='observations' name='observations'></textarea><br>
+            <h2>Data e Hora</h2>
+            <label>Data: </label><input type='date' id='date' name='date'><br>
+            <label>Hora: </label><input type='time' id='time' name='time'><br>
+            <button type='button' onclick='saveData()'>Salvar Dados</button>
+        </form>
+        <h2>Dados Salvos</h2>
+        <div id='dataDisplay'></div>
+        <button type='button' onclick='downloadData()'>Baixar Dados</button>
+        <h2>Graficos</h2>
+        <label>Tipo de Grafico: </label>
+        <select id='chartType'>
+            <option value='bar'>Barra</option>
+            <option value='line'>Linha</option>
+            <option value='pie'>Pizza</option>
+            <option value='radar'>Radar</option>
+        </select><br>
+        <label>Dados para Plotar: </label>
+        <select id='dataToPlot'>
+            <option value='fragmentQuantity'>Quantidade de Fragmentos</option>
+            <option value='fiberQuantity'>Quantidade de Fibras</option>
+            <option value='colors'>Cores de Microplasticos</option>
+            <option value='total'>Total (Fragmentos + Fibras)</option>
+        </select><br>
+        <button type='button' onclick='generateChart()'>Gerar Grafico</button>
+        <canvas id='dataChart' width='400' height='200'></canvas>
+        <button type='button' onclick='downloadChart()'>Baixar Grafico</button>
+    </div>
+    <script src='script.js'></script>
+</body>
+</html>
