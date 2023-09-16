@@ -1,44 +1,97 @@
-let data = JSON.parse(localStorage.getItem('data')) || [];
+let dataStorage = [];
 
-function addData() {
-    const point = document.getElementById('point').value;
-    const latitude = document.getElementById('latitude').value;
-    const longitude = document.getElementById('longitude').value;
-    const tideCondition = document.getElementById('tideCondition').value;
-    const waterCondition = document.getElementById('waterCondition').value;
+function saveData() {
+    let dataForm = document.getElementById('dataForm');
+    let data = {
+        point: dataForm.point.value,
+        latitude: parseFloat(dataForm.latitude.value),
+        longitude: parseFloat(dataForm.longitude.value),
+        tideCondition: dataForm.tideCondition.value,
+        waterCondition: dataForm.waterCondition.value,
+        observations: dataForm.observations.value,
+        date: dataForm.date.value,
+        time: dataForm.time.value,
+    };
+    dataStorage.push(data);
 
-    const newData = { point, latitude, longitude, tideCondition, waterCondition };
-    data.push(newData);
-    localStorage.setItem('data', JSON.stringify(data));
     displayData();
+    clearForm();
 }
 
 function displayData() {
-    const dataTable = document.getElementById('dataTable').getElementsByTagName('tbody')[0];
-    dataTable.innerHTML = '';
-    data.forEach((item, index) => {
-        const row = dataTable.insertRow();
-        row.insertCell(0).innerHTML = item.point;
-        row.insertCell(1).innerHTML = item.coordinates;
-        row.insertCell(2).innerHTML = item.tideCondition;
-        row.insertCell(3).innerHTML = item.waterCondition;
+    let dataDisplay = document.getElementById('dataDisplay');
+    dataDisplay.innerHTML = '';
+    dataStorage.forEach((data, index) => {
+        let dataItem = document.createElement('div');
+        dataItem.className = 'dataItem';
+        dataItem.innerHTML = `
+            <strong>Ponto:</strong> ${data.point}<br>
+            <strong>Latitude:</strong> ${data.latitude}<br>
+            <strong>Longitude:</strong> ${data.longitude}<br>
+            <strong>Estado da Maré:</strong> ${data.tideCondition}<br>
+            <strong>Condição da Água:</strong> ${data.waterCondition}<br>
+            <strong>Observações:</strong> ${data.observations}<br>
+            <strong>Data:</strong> ${data.date}<br>
+            <strong>Hora:</strong> ${data.time}<br>
+        `;
+        dataDisplay.appendChild(dataItem);
+    });
+
+    generateChart();
+}
+
+function clearForm() {
+    let dataForm = document.getElementById('dataForm');
+    dataForm.reset();
+}
+
+function generateChart() {
+    let chartType = document.getElementById('chartType').value;
+    let dataToPlot = document.getElementById('dataToPlot').value;
+
+    let labels = [];
+    let data = [];
+
+    dataStorage.forEach((item, index) => {
+        labels.push('Ponto ' + (index + 1));
+        data.push(item[dataToPlot]);
+    });
+
+    let ctx = document.getElementById('dataChart').getContext('2d');
+    if (window.dataChart) {
+        window.dataChart.destroy();
+    }
+
+    window.dataChart = new Chart(ctx, {
+        type: chartType,
+        data: {
+            labels: labels,
+            datasets: [{
+                label: dataToPlot,
+                data: data,
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
     });
 }
 
-function exportToCSV() {
-    let csvContent = "data:text/csv;charset=utf-8,";
-    csvContent += "Ponto,Coordenadas,Condição de Maré,Condição da Água\n";
-
-    data.forEach(item => {
-        csvContent += `${item.point},${item.coordinates},${item.tideCondition},${item.waterCondition}\n`;
-    });
-
-    const encodedUri = encodeURI(csvContent);
-    const link = document.createElement("a");
-    link.setAttribute("href", encodedUri);
-    link.setAttribute("download", "data.csv");
-    document.body.appendChild(link);
-    link.click();
+function downloadData() {
+    let blob = new Blob([JSON.stringify(dataStorage)], { type: 'application/json' });
+    saveAs(blob, 'data.json');
 }
 
-window.onload = displayData;
+function downloadChart() {
+    let canvas = document.getElementById('dataChart');
+    canvas.toBlob(function (blob) {
+        saveAs(blob, 'chart.png');
+    });
+}
