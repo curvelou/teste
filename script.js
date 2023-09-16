@@ -49,7 +49,7 @@ function displayData() {
     // ... Código para exibir os dados ...
 }
 
-function clearForm() {
+function clearForm() { 
     // ... Código para limpar o formulário ...
 }
 
