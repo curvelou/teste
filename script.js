@@ -9,7 +9,6 @@ function saveData() {
         tideCondition: dataForm.tideCondition.value,
         waterCondition: dataForm.waterCondition.value,
         observations: dataForm.observations.value,
-        date: dataForm.date.value,
         time: dataForm.time.value,
     };
     dataStorage.push(data);
@@ -28,10 +27,9 @@ function displayData() {
             <strong>Ponto:</strong> ${data.point}<br>
             <strong>Latitude:</strong> ${data.latitude}<br>
             <strong>Longitude:</strong> ${data.longitude}<br>
-            <strong>Estado da Maré:</strong> ${data.tideCondition}<br>
+            <strong>Condição da Maré:</strong> ${data.tideCondition}<br>
             <strong>Condição da Água:</strong> ${data.waterCondition}<br>
             <strong>Observações:</strong> ${data.observations}<br>
-            <strong>Data:</strong> ${data.date}<br>
             <strong>Hora:</strong> ${data.time}<br>
         `;
         dataDisplay.appendChild(dataItem);
