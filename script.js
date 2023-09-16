@@ -1,50 +1,43 @@
-let dataStorage = [];
+let data = JSON.parse(localStorage.getItem('data')) || [];
 
-function saveData() {
-    let dataForm = document.getElementById('dataForm');
-    let data = {
-        point: dataForm.point.value,
-        latitude: dataForm.latitude.value,
-        longitude: dataForm.longitude.value,
-        tideCondition: dataForm.tideCondition.value,
-        waterCondition: dataForm.waterCondition.value,
-        fragmentQuantity: parseInt(dataForm.fragmentQuantity.value),
-        fiberQuantity: parseInt(dataForm.fiberQuantity.value),
-        colors: {
-            blue: parseInt(dataForm.blue.value),
-            red: parseInt(dataForm.red.value),
-            green: parseInt(dataForm.green.value),
-            yellow: parseInt(dataForm.yellow.value),
-            black: parseInt(dataForm.black.value),
-            white: parseInt(dataForm.white.value),
-            orange: parseInt(dataForm.orange.value),
-            pink: parseInt(dataForm.pink.value),
-            brown: parseInt(dataForm.brown.value),
-            grey: parseInt(dataForm.grey.value),
-            translucent: parseInt(dataForm.translucent.value),
-        },
-        observations: dataForm.observations.value,
-        date: dataForm.date.value,
-        time: dataForm.time.value,
-    };
-    dataStorage.push(data);
+function addData() {
+    const point = document.getElementById('point').value;
+    const coordinates = document.getElementById('coordinates').value;
+    const tideCondition = document.getElementById('tideCondition').value;
+    const waterCondition = document.getElementById('waterCondition').value;
 
+    const newData = { point, coordinates, tideCondition, waterCondition };
+    data.push(newData);
+    localStorage.setItem('data', JSON.stringify(data));
     displayData();
 }
 
 function displayData() {
-    let dataDisplay = document.getElementById('dataDisplay');
-    dataDisplay.innerHTML = '';
-    dataStorage.forEach((data, index) => {
-        let dataItem = document.createElement('div');
-        dataItem.className = 'dataItem';
-        dataItem.innerText = `Ponto: ${data.point}, Latitude: ${data.latitude}, Longitude: ${data.longitude}, Quantidade de Fragmentos: ${data.fragmentQuantity}, Quantidade de Fibras: ${data.fiberQuantity}`;
-        dataDisplay.appendChild(dataItem);
+    const dataTable = document.getElementById('dataTable').getElementsByTagName('tbody')[0];
+    dataTable.innerHTML = '';
+    data.forEach((item, index) => {
+        const row = dataTable.insertRow();
+        row.insertCell(0).innerHTML = item.point;
+        row.insertCell(1).innerHTML = item.coordinates;
+        row.insertCell(2).innerHTML = item.tideCondition;
+        row.insertCell(3).innerHTML = item.waterCondition;
     });
 }
 
-function downloadData() {
-    let blob = new Blob([JSON.stringify(dataStorage)], { type: 'application/json' });
-    saveAs(blob, 'data.json');
+function exportToCSV() {
+    let csvContent = "data:text/csv;charset=utf-8,";
+    csvContent += "Ponto,Coordenadas,Condição de Maré,Condição da Água\n";
+
+    data.forEach(item => {
+        csvContent += `${item.point},${item.coordinates},${item.tideCondition},${item.waterCondition}\n`;
+    });
+
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "data.csv");
+    document.body.appendChild(link);
+    link.click();
 }
 
+window.onload = displayData;
