@@ -2,11 +2,12 @@ let data = JSON.parse(localStorage.getItem('data')) || [];
 
 function addData() {
     const point = document.getElementById('point').value;
-    const coordinates = document.getElementById('coordinates').value;
+    const latitude = document.getElementById('latitude').value;
+    const longitude = document.getElementById('longitude').value;
     const tideCondition = document.getElementById('tideCondition').value;
     const waterCondition = document.getElementById('waterCondition').value;
 
-    const newData = { point, coordinates, tideCondition, waterCondition };
+    const newData = { point, latitude, longitude, tideCondition, waterCondition };
     data.push(newData);
     localStorage.setItem('data', JSON.stringify(data));
     displayData();
