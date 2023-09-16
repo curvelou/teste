@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,24 +10,37 @@
 <div class="container">
 <h1>Aplicativo de Monitoramento Marinho</h1>
 <form id="dataForm">
+<div class="form-group">
 <label for="point">Ponto:</label>
 <input type="text" id="point" name="point" required>
-<label for="coordinates">Coordenadas:</label>
-<input type="text" id="coordinates" name="coordinates" required>
+</div>
+<div class="form-group">
+<label for="latitude">Latitude:</label>
+<input type="text" id="latitude" name="latitude" required>
+</div>
+<div class="form-group">
+<label for="longitude">Longitude:</label>
+<input type="text" id="longitude" name="longitude" required>
+</div>
+<div class="form-group">
 <label for="tideCondition">Condição de Maré:</label>
 <select id="tideCondition" name="tideCondition" required>
 <option value="enchente">Enchente</option>
 <option value="vazante">Vazante</option>
 </select>
+</div>
+<div class="form-group">
 <label for="waterCondition">Condição da Água:</label>
 <input type="text" id="waterCondition" name="waterCondition" required>
+</div>
 <button type="button" onclick="addData()">Adicionar Dados</button>
 </form>
 <table id="dataTable">
 <thead>
 <tr>
 <th>Ponto</th>
-<th>Coordenadas</th>
+<th>Latitude</th>
+<th>Longitude</th>
 <th>Condição de Maré</th>
 <th>Condição da Água</th>
 </tr>
@@ -41,3 +54,4 @@
 <script src="script.js"></script>
 </body>
 </html>
+dw
