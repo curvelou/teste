@@ -1,29 +1,43 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Registro de Dados de Campo</title>
-    <link rel='stylesheet' type='text/css' href='styles.css'>
-    <script src='https://cdn.jsdelivr.net/npm/chart.js'></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js'></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
+<title>Aplicativo de Monitoramento Marinho</title>
 </head>
 <body>
-    <div class='container'>
-        <h1>Registro de Dados de Campo</h1>
-        <p>Uma ferramenta simples para registrar e armazenar dados coletados em campo.</p>
-        <form id='dataForm'>
-            <label>Ponto: </label><input type='text' id='point' name='point'><br>
-            <h2>Coordenadas</h2>
-            <label>Latitude: </label><input type='text' id='latitude' name='latitude'><br>
-            <label>Longitude: </label><input type='text' id='longitude' name='longitude'><br>
-            <h2>Condições de Mare</h2>
-            <label>Estado da Mare: </label>
-            <select id='tideCondition' name='tideCondition'>
-                <option value='Mare Alta'>Mare Alta</option>
-                <option value='Mare Baixa'>Mare Baixa</option>
-            </select><br>
-            <label>Condição da Agua: </label><input type='text' id='waterCondition' name='waterCondition'><br>
-            
-    </div>
-    <script src='script.js'></script>
+<div class="container">
+<h1>Aplicativo de Monitoramento Marinho</h1>
+<form id="dataForm">
+<label for="point">Ponto:</label>
+<input type="text" id="point" name="point" required>
+<label for="coordinates">Coordenadas:</label>
+<input type="text" id="coordinates" name="coordinates" required>
+<label for="tideCondition">Condição de Maré:</label>
+<select id="tideCondition" name="tideCondition" required>
+<option value="enchente">Enchente</option>
+<option value="vazante">Vazante</option>
+</select>
+<label for="waterCondition">Condição da Água:</label>
+<input type="text" id="waterCondition" name="waterCondition" required>
+<button type="button" onclick="addData()">Adicionar Dados</button>
+</form>
+<table id="dataTable">
+<thead>
+<tr>
+<th>Ponto</th>
+<th>Coordenadas</th>
+<th>Condição de Maré</th>
+<th>Condição da Água</th>
+</tr>
+</thead>
+<tbody>
+<!-- As linhas de dados serão inseridas aqui pelo JavaScript -->
+</tbody>
+</table>
+<button onclick="exportToCSV()">Exportar para CSV</button>
+</div>
+<script src="script.js"></script>
 </body>
 </html>
