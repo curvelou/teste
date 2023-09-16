@@ -1,30 +1,50 @@
-let dataStorage1 = [];
-let map;
-let markerGroup;
+let dataStorage = [];
 
-function initMap() {
-    map = L.map('map').setView([0, 0], 2);
-    markerGroup = L.layerGroup().addTo(map);
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
-}
-
-function saveData1() {
-    let dataForm1 = document.getElementById('dataForm1');
+function saveData() {
+    let dataForm = document.getElementById('dataForm');
     let data = {
-        point: dataForm1.point.value,
-        latitude: parseFloat(dataForm1.latitude.value),
-        longitude: parseFloat(dataForm1.longitude.value),
-        tideCondition: dataForm1.tideCondition.value,
-        waterCondition: dataForm1.waterCondition.value,
-        date: dataForm1.date.value,
+        point: dataForm.point.value,
+        latitude: dataForm.latitude.value,
+        longitude: dataForm.longitude.value,
+        tideCondition: dataForm.tideCondition.value,
+        waterCondition: dataForm.waterCondition.value,
+        fragmentQuantity: parseInt(dataForm.fragmentQuantity.value),
+        fiberQuantity: parseInt(dataForm.fiberQuantity.value),
+        colors: {
+            blue: parseInt(dataForm.blue.value),
+            red: parseInt(dataForm.red.value),
+            green: parseInt(dataForm.green.value),
+            yellow: parseInt(dataForm.yellow.value),
+            black: parseInt(dataForm.black.value),
+            white: parseInt(dataForm.white.value),
+            orange: parseInt(dataForm.orange.value),
+            pink: parseInt(dataForm.pink.value),
+            brown: parseInt(dataForm.brown.value),
+            grey: parseInt(dataForm.grey.value),
+            translucent: parseInt(dataForm.translucent.value),
+        },
+        observations: dataForm.observations.value,
+        date: dataForm.date.value,
+        time: dataForm.time.value,
     };
-    dataStorage1.push(data);
+    dataStorage.push(data);
 
-    let marker = L.marker([data.latitude, data.longitude]).addTo(markerGroup);
-    marker.bindPopup(`Ponto: ${data.point}<br>Latitude: ${data.latitude}<br>Longitude: ${data.longitude}`).openPopup();
+    displayData();
 }
 
-window.onload = initMap;
+function displayData() {
+    let dataDisplay = document.getElementById('dataDisplay');
+    dataDisplay.innerHTML = '';
+    dataStorage.forEach((data, index) => {
+        let dataItem = document.createElement('div');
+        dataItem.className = 'dataItem';
+        dataItem.innerText = `Ponto: ${data.point}, Latitude: ${data.latitude}, Longitude: ${data.longitude}, Quantidade de Fragmentos: ${data.fragmentQuantity}, Quantidade de Fibras: ${data.fiberQuantity}`;
+        dataDisplay.appendChild(dataItem);
+    });
+}
+
+function downloadData() {
+    let blob = new Blob([JSON.stringify(dataStorage)], { type: 'application/json' });
+    saveAs(blob, 'data.json');
+}
+
