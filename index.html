@@ -1,37 +1,35 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Registro de Dados de Campo - Dashboard</title>
+    <title>Registro de Dados de Campo</title>
     <link rel='stylesheet' type='text/css' href='styles.css'>
-    <script src='https://cdn.jsdelivr.net/npm/chart.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js'></script>
 </head>
 <body>
     <div class='container'>
-        <h1>Registro de Dados de Campo - Dashboard</h1>
-        <p>Uma ferramenta simples para registrar e visualizar dados coletados em campo.</p>
+        <h1>Registro de Dados de Campo</h1>
+        <p>Uma ferramenta simples para registrar e armazenar dados coletados em campo.</p>
         <form id='dataForm'>
             <label>Ponto: </label><input type='text' id='point' name='point'><br>
             <h2>Coordenadas</h2>
             <label>Latitude: </label><input type='text' id='latitude' name='latitude'><br>
             <label>Longitude: </label><input type='text' id='longitude' name='longitude'><br>
-            <h2>Condições de Maré</h2>
-            <label>Estado da Maré: </label>
+            <h2>Condições da Maré</h2>
+            <label>Condição da Maré: </label>
             <select id='tideCondition' name='tideCondition'>
-                <option value='Mare Alta'>Mare Alta</option>
-                <option value='Mare Baixa'>Mare Baixa</option>
+                <option value='Vazante'>Vazante</option>
+                <option value='Enchente'>Enchente</option>
             </select><br>
             <label>Condição da Água: </label><input type='text' id='waterCondition' name='waterCondition'><br>
             <label>Observações: </label><textarea id='observations' name='observations'></textarea><br>
-            <h2>Data e Hora</h2>
-            <label>Data: </label><input type='date' id='date' name='date'><br>
+            <h2>Hora</h2>
             <label>Hora: </label><input type='time' id='time' name='time'><br>
             <button type='button' onclick='saveData()'>Salvar Dados</button>
         </form>
         <h2>Dados Salvos</h2>
         <div id='dataDisplay'></div>
         <button type='button' onclick='downloadData()'>Baixar Dados</button>
-        
+    </div>
     <script src='script.js'></script>
 </body>
 </html>
